@@ -68,7 +68,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 group :production do
-  gem 'pg','~> 1.8'
+  gem 'pg','~> 0.18'
 end
 
 group :development do
