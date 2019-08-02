@@ -1,0 +1,72 @@
+
+<div class="row">
+    <%= form_tag contacts_path, :method => 'get', class: 'input-group'  do %>
+      <%= text_field_tag :search, params[:search], class: 'form-control', placeholder: 'Search for contacts...' %>
+      <span class="input-group-btn">
+        <%= submit_tag "search", class: "btn btn-default" %>
+      </span>
+    <% end %>
+</div><br>     
+<div class="panel panel-default">
+    
+    
+    <table class="table" style="color:black">
+      <!--Display result not found message when search result not found-->
+      <% if params[:search].present? %>
+        <% if !@contacts.present? %>
+          <h5 style="color: black"> No result found, please enter a valid contact </h5> 
+        <% end %>
+      <% end %>
+        
+      <!--Display all the contacts-->
+        <% @contacts.order(:name).each do |contact| %>
+        
+          <tr>
+            <td class="middle">
+              <div class="media">
+                <div class="media-left">
+                  
+                  <%= link_to (image_tag contact.avatar.url(:thumb)),contact, class: "media-object" %>
+                  
+                </div>
+                <div class="media-body">
+                  <h4 class="media-heading"><%= link_to contact.name.upcase,contact %></h4>
+                  <address>
+                    <strong><%= contact.department %></strong><br>
+                    <% contact.phone.each do |b| %>
+                      <%= b.phone  %>
+                      <% break %>
+                    <% end %>
+                    <br>
+                   
+                    <%= contact.email %>
+                  </address>
+                </div>
+              </div>
+            </td>
+            <td width="120" class="middle">
+              <div>
+
+                <%= link_to contact, class: "btn btn-circle btn-default btn-xs", title: "View More" do %>
+                  <i class="glyphicon glyphicon-chevron-right"></i> 
+                <% end %>
+                <%= link_to edit_contact_path(contact), class: "btn btn-circle btn-default btn-xs", title: "Edit" do %>
+                  <i class="glyphicon glyphicon-edit"></i>
+                <% end %>
+                <%= link_to contact_path(contact), :method => :delete, class: "btn btn-circle btn-danger btn-xs", title: "Delete", data: { confirm: "Are you sure ?" } do %>
+                  <i class="glyphicon glyphicon-remove"></i>
+                <% end %>            
+              </div>
+            </td>
+          </tr>
+
+      <% end %>
+    
+    </table>            
+  </div>
+
+  <div class="text-center">
+    <nav>
+      <%= will_paginate %>
+    </nav>
+  </div>

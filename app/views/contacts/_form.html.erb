@@ -1,0 +1,123 @@
+
+<%= form_for @contact, html: { multipart: true } do |f| %>          
+    <div class="panel-body">
+
+      
+      <% if @contact.errors.any? %>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="alert alert-danger">
+              <h3>Please ensure the following are corrected:</h3>
+
+              <ul>
+                <% @contact.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      <% end %>
+
+      <div class="form-horizontal" >
+        <div class="row">
+          <div class="col-md-8" style="color: Black">
+            <div class="form-group">
+              <%= f.label :name, class: "control-label col-md-3" %>               
+              <div class="col-md-8">
+                <%= f.text_field :name, style: "text-transform: uppercase;", class: "form-control" %>                
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :department, class: "control-label col-md-3" %>               
+              <div class="col-md-8">
+                <%= f.text_field :department, class: "form-control" %>                
+              </div>              
+            </div>
+
+                
+            <div class="form-group">
+              <%= f.label :email, class: "control-label col-md-3" %>               
+              <div class="col-md-8">
+                <%= f.text_field :email, class: "form-control" %>                
+              </div>              
+            </div>
+
+          
+            <div class="fields">
+              <%$count = 1%>
+              <%= f.fields_for :phone do |builder| %>
+                <div class="form-group">
+                  <%= render 'phone', f: builder %>
+                </div>
+                <% $count = $count + 1%>
+              <% end %>
+            </div> 
+                         
+              
+            <div class="fields2">
+                <%$counta = 1%>
+              <%= f.fields_for :address do |ad| %>
+                <div class="form-group">
+                  <%= render 'address', f: ad %>
+                </div>
+                <% $counta = $counta + 1%>
+              <% end %>
+            </div> 
+
+            <div class="form-group">
+              <%= f.label :breif_note, class: "control-label col-md-3" %>               
+              <div class="col-md-8">
+                <%= f.text_area :breif_note, class: "form-control" %>                
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="group" class="control-label col-md-3">Group</label>
+              <div class="col-md-5">
+                <%= f.collection_select :group_id, Group.all, :id, :name, {prompt: "Select Group"}, class: "form-control"%>
+                
+              </div>
+            </div>
+            
+           
+          </div>
+          <div class="col-md-4">
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+              <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
+                <%= image_tag @contact.avatar.url(:medium) %>
+                
+              </div>
+              <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 150px; max-height: 150px;"></div>
+              <div class="text-center">
+                <span class="btn btn-default btn-file"><span class="fileinput-new">Upload Photo</span><span class="fileinput-exists">Change</span><%= f.file_field :avatar %></span>
+                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+              </div>
+            </div><br><br><br><br>
+            <%= link_to_add_row('Add Another Phone',f,:phone , class: "btn btn-outline-primary pull-centre", style:"color: #282c33" )%><br><br>
+
+            <%= link_to_add_row1('Add More Address',f,:address , class: "btn btn-dark pull-centre")%>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer" > <!--style="background-color: #282c33"-->
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+              <button type="submit" class="btn btn-success"
+               style:"color: white">Save</button>
+
+              <%= link_to "Cancel", contacts_path, class: "btn btn-danger" %>              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+    
+

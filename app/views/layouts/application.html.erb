@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true,:cache => true %>
+  <%= csrf_meta_tags %>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+
+
+
+<body>
+	<!-- navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #293744"> <!--#282c33-->
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false" style="color: white">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <%= link_to "contacts", root_path, class: "navbar-brand text-uppercase"  %>          
+        </div>
+
+
+        <!-- /.navbar-header -->
+        <% if user_signed_in? %>
+          <div class="collapse navbar-collapse" id="navbar-collapse">
+            <div class="navbar-right nav btn">
+              <div class="navbar-right nav btn">
+              <%= link_to destroy_user_session_path, :method => 'delete' , class: "btn btn-link" do%>
+                <i class="glyphicon glyphicon-log-out"></i> 
+                Logout
+              <% end %>
+              </div>
+            </div>
+          </div>
+
+        <% else %>
+        
+        <ul class="navbar-nav pull-right nav">
+     
+          <li class="<%= 'active' if current_page?(new_user_registration_path) %>">
+            <%= link_to  new_registration_path(resource_name) , class: "btn btn-link pull-right" do%>
+            <span class="nav-link">
+          &nbsp;Add User  <i class="fas fa-user-plus"></i> </span>
+            <% end %>
+          </li>
+          
+
+        </ul> 
+        <% end %>
+      </div>
+    </nav>
+    <br><br><br><br>
+    
+    <% if user_signed_in? %>
+    <div style="text-align: center">
+      <h1 style="color: #293744; font-weight:bold"><%= current_user.uname %></h1>
+          <%= link_to edit_user_registration_path, class: "btn btn-link" do %>
+            <i class="fas fa-user-edit"></i>
+            Edit Profile
+          <% end %>  
+         
+          
+
+    </div><br>
+      
+     
+      <% else %>
+      <h1 style="text-align: center; font-weight:bolder; color: #293744; font-size: 70px">Welcome!</h1>
+      <% end %>
+
+
+
+  <!-- content -->
+  
+    <div class="container">
+      <div class="row">
+      <% if user_signed_in? %>
+        <div class="col-md-3">
+          <div class="list-group">
+
+            <% active = params[:group_id] == nil ? 'active' : ''%>
+            <%= link_to contacts_path, class: "list-group-item active" do%>
+              All Contacts<span class="badge"><%= Contact.count %></span>
+            <% end %>
+            <% Group.all.each do |group| %>
+              <% active = params[:group_id].to_i== group.id ? 'active' : ''%>
+              <%= link_to contacts_path(group_id: group.id), class: "list-group-item #{active}" do%>
+                <%= group.name %><span class="badge"><%= group.contacts.count %></span>
+              <% end %>
+              
+            <% end %>
+            </br>
+           
+            <%= link_to new_contact_path ,  class: "btn btn-primary"  do %>
+              <i class="glyphicon glyphicon-plus"></i> 
+              Add Contact
+            <% end %>
+          
+          </div>
+        </div><!-- /.col-md-3 -->
+      <% end %>
+        <div class="col-md-9 pull-right ">
+
+          <!--Flash Messages-->
+          <% flash.each do |type, message| %>
+            
+              <%= content_tag :div, class: "alert alert-#{type} alert-dismissible", role: "alert" do %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <%= message %>
+              <% end %> 
+             
+          <% end %> 
+
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+   
+    
+
+</body>
+</html>
