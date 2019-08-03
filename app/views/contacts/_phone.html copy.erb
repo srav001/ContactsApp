@@ -1,0 +1,19 @@
+<div class="form-group">
+    <%= f.label :email, class: "control-label col-md-3", id: "formlabel" %> 
+    
+    <div class="col-md-8">
+        
+        <%= f.text_field :email,class: "form-control" %>
+        
+        
+    </div>
+    <%= f.hidden_field :_destroy %>
+    <% if $count != 1%>
+    <%= link_to 'Delete', '', class: 'remove_record', id: 'deleter'  %>
+    <% end %>
+</div>  
+   
+
+
+    
+
