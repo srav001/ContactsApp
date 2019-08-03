@@ -3,6 +3,7 @@
 ConactsApp is contacts management app. It can be used in offices,schools and other such instutions where the admins share the contacts among themselves. It includes all basic functionalities expected of a contacts app.
 
 ## Pre-requisite
+
  * Ruby 2.5+
  * Rails 5+
 
@@ -10,7 +11,7 @@ ConactsApp is contacts management app. It can be used in offices,schools and oth
  ! Either set the ruby version default to said versions or else change gem file to your verson and install bundles.  
 
 ## Installation and Working
-```
+
 To get the app:-
 $ git clone https://github.com/srav001/ContactsApp.git
 $cd ContactsApp
@@ -37,7 +38,7 @@ In browser,enter 'localhost:3000' to view the app
 !To stop the server
 ctrl + c
 
-```
+
 
 
 
