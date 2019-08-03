@@ -8,7 +8,7 @@
               <div class="col-md-8">
 
                 <div class="form-group">
-                  <!--<div class="control-label col-md-3" ><strong>Name:</strong></div>-->         
+                      
                   <div style="padding:9px; text-align:center; font-weight: bold; font-size: 30px; text-transform: uppercase;" class="col-md-8">
                     <%= @contact.name %>  
                   </div>              
@@ -46,10 +46,8 @@
                   <% end %> 
                 <% end %>
               <% end %>
-                
-                 
 
-        
+                
               <% if @contact.address.present? %>
                 <% @contact.address.each do |b| %>
                   <% if !b.address.empty? %>
